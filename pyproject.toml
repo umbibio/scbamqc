@@ -1,0 +1,66 @@
+[project]
+name = "scbamqc"
+version = "0.1.0.dev0"
+description = "Per-barcode BAM alignment QC and alignment-based cell filtering for single-cell RNA-seq"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Argenis Arriojas", email = "ArriojasMaldonado001@umb.edu" },
+]
+requires-python = ">=3.11"
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "cyclopts>=3",
+    "numpy",
+    "pandas",
+    "rich",
+    "scikit-learn",
+    "scipy",
+]
+
+[project.optional-dependencies]
+anndata = ["anndata>=0.10", "h5py"]
+bam = ["pysam>=0.22"]
+plot = ["matplotlib"]
+all = ["scbamqc[anndata,bam,plot]"]
+test = ["pytest>=8.3.4", "anndata>=0.10", "h5py", "matplotlib"]
+
+[project.scripts]
+scbamqc = "scbamqc.cli:main"
+
+[project.urls]
+"Homepage" = "https://github.com/umbibio/scbamqc"
+"Repository" = "https://github.com/umbibio/scbamqc.git"
+"Bug Tracker" = "https://github.com/umbibio/scbamqc/issues"
+"Changelog" = "https://github.com/umbibio/scbamqc/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = ["flit_core>=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "scbamqc"
+
+[tool.flit.sdist]
+exclude = ["r/"]
+
+[dependency-groups]
+dev = [
+    "bump-my-version>=0.31.1",
+    "pre-commit>=4.1.0",
+    "ruff>=0.9.4",
+    "scbamqc[test,bam]",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "paper: regression tests against the paper's local data (skipped when absent)",
+]
