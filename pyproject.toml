@@ -14,6 +14,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
 ]
 dependencies = [
@@ -30,7 +31,7 @@ anndata = ["anndata>=0.10", "h5py"]
 bam = ["pysam>=0.22"]
 plot = ["matplotlib"]
 all = ["scbamqc[anndata,bam,plot]"]
-test = ["pytest>=8.3.4", "anndata>=0.10", "h5py", "matplotlib"]
+test = ["pytest>=8.3.4"]
 
 [project.scripts]
 scbamqc = "scbamqc.cli:main"
@@ -56,7 +57,7 @@ dev = [
     "bump-my-version>=0.31.1",
     "pre-commit>=4.1.0",
     "ruff>=0.9.4",
-    "scbamqc[test,bam]",
+    "scbamqc[test,all]",
 ]
 
 [tool.pytest.ini_options]

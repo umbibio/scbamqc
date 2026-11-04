@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional extras: `bam` (pysam), `anndata` (anndata, h5py), `plot` (matplotlib), `all`.
 - `scbamqc.pl`: `bam_qc_hist()`, `qc_score_scatter()`, `qc_score_hist()`.
 - `scbamqc.io.read_10x_h5()`. Scanpy is not necessary.
+- Support for Python 3.11 to 3.14.
 
 ### Changed
 - `scbamqc bam` writes plots only with `--plots`. matplotlib is optional.
