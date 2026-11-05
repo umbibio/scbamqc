@@ -28,7 +28,7 @@ def rh():
     a = sbq.add_bam_qc(a, RH / "RH-10x.bam_qc.csv.gz")
     a = sbq.basic_qc(a)
     sbq.qc_score(a, min_reads=150, base_qual_scale=sbq.PAPER_BASE_QUAL_SCALE)
-    sbq.select_cells(a, min_counts=100, min_score=0)
+    sbq.select_cells(a, min_counts=100, min_score=0, tol=sbq.PAPER_GMM_TOL)
     return a
 
 
@@ -48,3 +48,14 @@ def test_rh_thresholds(rh):
     assert (q > 0.8).sum() == 13_461
     assert (q > 0.9).sum() == 8_609
     assert (q > 0.95).sum() == 4_536
+
+
+def test_rh_converged_fit(rh):
+    """The default mixture fit runs to convergence and selects fewer cells.
+
+    The R package (mclust, converged) selects 15,533 on the same data.
+    """
+    obs = rh.obs.copy()
+    sel = sbq.select_cells(obs, min_counts=100, min_score=0, key_added=None)
+    assert sel.sum() == 15_536
+    assert not (sel & ~rh.obs["selected"].values).any()

@@ -102,6 +102,7 @@ To use the same settings as the TgRN paper:
 
 ```python
 sbq.qc_score(adata, min_reads=150, base_qual_scale=sbq.PAPER_BASE_QUAL_SCALE)
+sbq.select_cells(adata, tol=sbq.PAPER_GMM_TOL)
 ```
 
 ### Cell selection
@@ -112,6 +113,20 @@ sbq.qc_score(adata, min_reads=150, base_qual_scale=sbq.PAPER_BASE_QUAL_SCALE)
 - it is in the component with the higher counts,
 - `total_counts > min_counts` (default 100),
 - `qc_score > min_score` (default 0).
+
+The mixture fit runs until it converges. The paper stopped the fit early
+(`tol=PAPER_GMM_TOL`). On the paper sample, the converged fit selects 15,536
+cells and the paper fit selects 16,120. All cells of the converged fit are in
+the paper set.
+
+## R
+
+The R package in [`r/`](r/README.md) does the same steps for Seurat objects.
+It reads the table that `scbamqc bam` writes.
+
+```r
+remotes::install_github("umbibio/scbamqc", subdir = "r")
+```
 
 ## Development
 

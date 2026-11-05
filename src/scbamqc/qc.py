@@ -11,6 +11,7 @@ The defaults reproduce the cell filter of the TgRN paper (SM1/SI1):
    alignment profile.
 4. :func:`select_cells` fits a two-component Gaussian mixture on
    ``(log10 total_counts, qc_score)`` and keeps the high-count component.
+   The paper used ``tol=PAPER_GMM_TOL``; the default runs EM to convergence.
 
 Functions take an ``AnnData`` (any object with ``.obs``, ``.X`` and
 ``obs_names``) or, where only ``obs`` columns are needed, a ``DataFrame``.
@@ -29,6 +30,7 @@ import pandas as pd
 __all__ = [
     "DEFAULT_FEATURES",
     "PAPER_BASE_QUAL_SCALE",
+    "PAPER_GMM_TOL",
     "add_bam_qc",
     "basic_qc",
     "gmm_labels",
@@ -39,6 +41,10 @@ __all__ = [
 
 #: Divisor applied to ``mean_base_qual`` in the TgRN paper (Phred / 10).
 PAPER_BASE_QUAL_SCALE = 10.0
+
+#: Convergence tolerance of the mixture fit in the TgRN paper (the
+#: scikit-learn default). The fit stops before it converges.
+PAPER_GMM_TOL = 1e-3
 
 #: BAM-QC columns entering the kernel density, in order.
 DEFAULT_FEATURES: tuple[str, ...] = (
@@ -259,6 +265,8 @@ def gmm_labels(
     data: Any,
     n_components: int = 2,
     random_state: int = 0,
+    tol: float = 1e-10,
+    max_iter: int = 100_000,
     counts_key: str = "total_counts",
     score_key: str = "qc_score",
     key_added: str | None = "gmm_label",
@@ -268,6 +276,11 @@ def gmm_labels(
     The mixture is fitted on barcodes with ``qc_score > 0``. Components are
     ranked by mean ``log10`` count, the highest-count component labeled 0.
     Barcodes not in the fit are labeled -1.
+
+    EM runs until the mean log-likelihood changes by less than ``tol``. The
+    default runs to convergence, so the result does not depend on the
+    initialization. Use ``tol=PAPER_GMM_TOL`` to repeat the paper, which
+    stopped early.
     """
     from sklearn.mixture import GaussianMixture
 
@@ -279,7 +292,12 @@ def gmm_labels(
     mask = score > 0
     X = np.column_stack([log_counts[mask], score[mask]])
 
-    gmm = GaussianMixture(n_components=n_components, random_state=random_state)
+    gmm = GaussianMixture(
+        n_components=n_components,
+        random_state=random_state,
+        tol=tol,
+        max_iter=max_iter,
+    )
     raw_labels = gmm.fit(X).predict(X)
 
     mean_counts = [
@@ -300,6 +318,8 @@ def select_cells(
     min_score: float = 0.0,
     n_components: int = 2,
     random_state: int = 0,
+    tol: float = 1e-10,
+    max_iter: int = 100_000,
     counts_key: str = "total_counts",
     score_key: str = "qc_score",
     key_added: str | None = "selected",
@@ -308,7 +328,8 @@ def select_cells(
 
     A barcode is selected when ``total_counts > min_counts``,
     ``qc_score > min_score`` and its :func:`gmm_labels` label is 0. Also
-    stores the mixture labels in ``obs["gmm_label"]``.
+    stores the mixture labels in ``obs["gmm_label"]``. See
+    :func:`gmm_labels` for ``tol`` and ``max_iter``.
 
     Returns
     -------
@@ -319,6 +340,8 @@ def select_cells(
         data,
         n_components=n_components,
         random_state=random_state,
+        tol=tol,
+        max_iter=max_iter,
         counts_key=counts_key,
         score_key=score_key,
     )
@@ -337,6 +360,8 @@ def select_cells(
                 "min_score": min_score,
                 "n_components": n_components,
                 "random_state": random_state,
+                "tol": tol,
+                "max_iter": max_iter,
                 "n_selected": int(selected.sum()),
             },
         )

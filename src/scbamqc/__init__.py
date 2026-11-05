@@ -6,6 +6,7 @@ from . import pl, qc
 from .qc import (
     DEFAULT_FEATURES,
     PAPER_BASE_QUAL_SCALE,
+    PAPER_GMM_TOL,
     add_bam_qc,
     basic_qc,
     gmm_labels,
@@ -17,6 +18,7 @@ from .qc import (
 __all__ = [
     "DEFAULT_FEATURES",
     "PAPER_BASE_QUAL_SCALE",
+    "PAPER_GMM_TOL",
     "add_bam_qc",
     "basic_qc",
     "gmm_labels",

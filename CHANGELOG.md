@@ -11,8 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `--nm-tag` option for aligners that write `NM` and not `nM`. The default is `nM`.
 - `scbamqc tags`: lists the BAM tags on the first mapped reads.
 - `scbamqc bam` shows a warning if most reads do not have the barcode tag or the mismatch tag. Use `--no-check-tags` to skip the check.
-- `scbamqc.qc`: `add_bam_qc()`, `basic_qc()`, `qc_score()`, `gmm_labels()`, `select_cells()`. With `base_qual_scale=PAPER_BASE_QUAL_SCALE`, they give the same cells as the TgRN paper.
+- `scbamqc.qc`: `add_bam_qc()`, `basic_qc()`, `qc_score()`, `gmm_labels()`, `select_cells()`. With `base_qual_scale=PAPER_BASE_QUAL_SCALE` and `tol=PAPER_GMM_TOL`, they give the same cells as the TgRN paper.
 - `qc_score()` options: `base_qual_scale`, `max_mean_nm`, `features`. The default `base_qual_scale` is the median `mean_base_qual` of the scored barcodes. For the paper value, use `PAPER_BASE_QUAL_SCALE` (10).
+- `select_cells()` and `gmm_labels()` options: `tol`, `max_iter`. The default mixture fit runs until it converges. For the paper fit, which stops early, use `tol=PAPER_GMM_TOL`.
 - Optional extras: `bam` (pysam), `anndata` (anndata, h5py), `plot` (matplotlib), `all`.
 - `scbamqc.pl`: `bam_qc_hist()`, `qc_score_scatter()`, `qc_score_hist()`.
 - `scbamqc.io.read_10x_h5()`. Scanpy is not necessary.
