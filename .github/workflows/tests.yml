@@ -3,7 +3,9 @@ name: Tests
 on:
   push:
     branches: [main]
+    paths-ignore: ["r/**", ".github/workflows/r.yml"]
   pull_request:
+    paths-ignore: ["r/**", ".github/workflows/r.yml"]
   workflow_call:
   workflow_dispatch:
 

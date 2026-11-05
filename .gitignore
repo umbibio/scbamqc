@@ -5,6 +5,7 @@
 !.git*
 !.*.toml
 !.*.yaml
+!.Rbuildignore
 
 # If you really want to ignore files
 ..*

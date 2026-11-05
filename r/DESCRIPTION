@@ -1,0 +1,28 @@
+Package: scbamqc
+Title: Cell Selection from Single-Cell Alignment Quality
+Version: 0.1.0.9000
+Authors@R:
+    person("Argenis", "Arriojas", , "ArriojasMaldonado001@umb.edu", role = c("aut", "cre"))
+Description: Scores each cell barcode by the kernel density of its
+    alignment profile (soft-clipped fraction, base quality) and selects
+    cells with a two-component Gaussian mixture on counts and score.
+    Reads the per-barcode table written by the 'scbamqc bam' command of the
+    Python package. Works on 'Seurat' objects and data frames.
+License: BSD_3_clause + file LICENSE
+URL: https://github.com/umbibio/scbamqc
+BugReports: https://github.com/umbibio/scbamqc/issues
+Depends:
+    R (>= 4.1)
+Imports:
+    mclust,
+    stats,
+    utils
+Suggests:
+    ggplot2 (>= 3.5.0),
+    Matrix,
+    SeuratObject,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.1.1

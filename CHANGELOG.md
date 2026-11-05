@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `scbamqc.pl`: `bam_qc_hist()`, `qc_score_scatter()`, `qc_score_hist()`.
 - `scbamqc.io.read_10x_h5()`. Scanpy is not necessary.
 - Support for Python 3.11 to 3.14.
+- R package in `r/` for Seurat objects and data frames: `add_bam_qc()`, `basic_qc()`, `qc_score()`, `select_cells()` and ggplot2 plots.
 
 ### Changed
 - `scbamqc bam` writes plots only with `--plots`. matplotlib is optional.
