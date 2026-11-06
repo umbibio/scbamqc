@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.0] - 2026-11-06
 ### Added
 - `scbamqc bam`: the `bam_qc_summary.py` v0.2.1 script as a command. The options and output files are the same.
 - `--nm-tag` option for aligners that write `NM` and not `nM`. The default is `nM`.

@@ -1,6 +1,6 @@
 [project]
 name = "scbamqc"
-version = "0.1.0.dev0"
+version = "0.1.0"
 description = "Per-barcode BAM alignment QC and alignment-based cell filtering for single-cell RNA-seq"
 readme = "README.md"
 license = { file = "LICENSE" }
