@@ -65,3 +65,12 @@ search = """name = "scbamqc"
 version = "{current_version}\""""
 replace = """name = "scbamqc"
 version = "{new_version}\""""
+
+# R does not accept versions such as 0.3.1.dev0, so r/DESCRIPTION changes on release bumps only.
+# With --new-version, include_bumps has no effect: the R version always changes to X.Y.Z.
+[[tool.bumpversion.files]]
+include_bumps = ["release"]
+filename = "r/DESCRIPTION"
+search = "^Version: \\d+\\.\\d+\\.\\d+(\\.\\d+)?$"
+replace = "Version: {new_major}.{new_minor}.{new_patch}"
+regex = true
