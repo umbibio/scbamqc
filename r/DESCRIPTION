@@ -1,6 +1,6 @@
 Package: scbamqc
 Title: Cell Selection from Single-Cell Alignment Quality
-Version: 0.1.0.9000
+Version: 0.3.0
 Authors@R:
     person("Argenis", "Arriojas", , "ArriojasMaldonado001@umb.edu", role = c("aut", "cre"))
 Description: Scores each cell barcode by the kernel density of its

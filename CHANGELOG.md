@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- The version numbers continue from the `bam_qc_summary.py` script. The paper uses version 0.2.1 of that script. The package goes from 0.1.0 to 0.3.0, so that no package version has the same number as the script.
+- The BAM metrics are the same as in `bam_qc_summary.py` v0.2.1. For the cell selection of the paper, use `base_qual_scale=PAPER_BASE_QUAL_SCALE` and `tol=PAPER_GMM_TOL`.
+- The R package has the same version number as the Python package.
 
 ## [0.1.0] - 2026-11-06
 ### Added
