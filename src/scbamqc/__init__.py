@@ -1,6 +1,6 @@
 """Per-barcode BAM alignment QC and alignment-based cell filtering."""
 
-__version__ = "0.3.0"
+__version__ = "0.4.0.dev0"
 
 from . import pl, qc
 from .qc import (
