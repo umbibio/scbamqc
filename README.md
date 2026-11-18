@@ -59,7 +59,9 @@ scbamqc bam sample.bam --barcode-tag CB --nm-tag NM
 ### Extra metrics
 
 Add `--extra-metrics` to get more columns. The default columns do not change.
-The new columns come after them.
+The new columns come after them. The tool writes the result to
+`PREFIX_per_cell_extra.csv.gz`, not to `PREFIX_per_cell.csv.gz`. Thus the
+output of a default run and an extra run can be in the same folder.
 
 ```bash
 # Cell Ranger: the BAM tags give the read regions

@@ -204,7 +204,8 @@ def bam(
 ):
     """Calculate alignment statistics for each cell barcode.
 
-    Writes OUT_PREFIX_per_cell.csv.gz, and OUT_PREFIX_plots.png with --plots.
+    Writes OUT_PREFIX_per_cell.csv.gz (OUT_PREFIX_per_cell_extra.csv.gz with
+    --extra-metrics), and OUT_PREFIX_plots.png with --plots.
     Memory use depends on the number of barcodes, not on the number of reads.
     With --extra-metrics, it also depends on the number of UMIs on one contig.
     """
@@ -284,7 +285,8 @@ def bam(
         console.print(f"[bold green]✓[/bold green] plots → [cyan]{plot_path}[/cyan]")
 
     if write_csv:
-        csv_path = f"{out_prefix}_per_cell.csv.gz"
+        suffix = "_per_cell_extra" if extra_metrics else "_per_cell"
+        csv_path = f"{out_prefix}{suffix}.csv.gz"
         df.to_csv(csv_path, index=False, compression="gzip")
         console.print(
             f"[bold green]✓[/bold green] per-cell CSV ({len(df):,} rows) "

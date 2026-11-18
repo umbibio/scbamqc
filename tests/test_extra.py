@@ -55,7 +55,21 @@ def _run_cli(bam, tmp_path, monkeypatch, *args) -> str:
     with pytest.raises(SystemExit) as e:
         app([*cmd, "--no-check-tags", *args])
     assert e.value.code in (0, None)
-    return gzip.open(tmp_path / "o_per_cell.csv.gz", "rt").read()
+    name = (
+        "o_per_cell_extra.csv.gz" if "--extra-metrics" in args else "o_per_cell.csv.gz"
+    )
+    return gzip.open(tmp_path / name, "rt").read()
+
+
+def test_cli_output_names(cr_bam, tmp_path, monkeypatch):
+    """--extra-metrics writes *_per_cell_extra.csv.gz; the default name is kept."""
+    _run_cli(cr_bam, tmp_path, monkeypatch)
+    assert sorted(p.name for p in tmp_path.glob("o_*")) == ["o_per_cell.csv.gz"]
+    _run_cli(cr_bam, tmp_path, monkeypatch, "--extra-metrics")
+    assert sorted(p.name for p in tmp_path.glob("o_*")) == [
+        "o_per_cell.csv.gz",
+        "o_per_cell_extra.csv.gz",
+    ]
 
 
 # ---------------------------------------------------------------------------

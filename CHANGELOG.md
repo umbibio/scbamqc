@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- `scbamqc bam --extra-metrics`: adds columns for read regions, UMIs, polyA and TSO reads, unique MAPQ and mismatch counts. Without the option, the output does not change.
+- `scbamqc bam --extra-metrics`: adds columns for read regions, UMIs, polyA and TSO reads, unique MAPQ and mismatch counts. Without the option, the output does not change. With the option, the output file is `PREFIX_per_cell_extra.csv.gz`.
 - Read regions come from the Cell Ranger tags `RE`, `AN`, `GX` and `TX`. Without these tags, they come from the GTF file of `--gtf`.
 - Options for `--extra-metrics`: `--gtf`, `--strand` (`forward`, `reverse` or `unstranded`), `--umi-tag` and `--mapq-unique`.
 - `--region-source` option (`auto`, `tags` or `gtf`): selects the source of the read regions. Use `gtf` to compare the GTF regions with the Cell Ranger `RE` tags.
