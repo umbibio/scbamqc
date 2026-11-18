@@ -1,0 +1,18 @@
+##gtf-version 3
+#!comment line
+chr1	test	gene	1001	3000	.	+	.	gene_id "G1"; gene_biotype "protein_coding";
+chr1	test	transcript	1001	3000	.	+	.	gene_id "G1"; transcript_id "G1.1";
+chr1	test	exon	1001	1500	.	+	.	gene_id "G1"; transcript_id "G1.1";
+chr1	test	CDS	1101	1500	.	+	0	gene_id "G1"; transcript_id "G1.1";
+chr1	test	exon	2501	3000	.	+	.	gene_id "G1"; transcript_id "G1.1";
+chr1	test	gene	5001	6000	.	-	.	gene_id "G2"; gene_ebi_biotype "protein_coding";
+chr1	test	transcript	5001	6000	.	-	.	gene_id "G2"; transcript_id "G2.1";
+chr1	test	exon	5001	6000	.	-	.	gene_id "G2"; transcript_id "G2.1";
+chr2	test	gene	1001	2000	.	-	.	gene_id "G3";
+chr2	test	exon	1001	1200	.	-	.	gene_id "G3"; transcript_id "G3.1";
+chr2	test	exon	1801	2000	.	-	.	gene_id "G3"; transcript_id "G3.1";
+chr2	test	three_prime_utr	1801	2000	.	-	.	gene_id "G3"; transcript_id "G3.1";
+chr1	test	gene	1801	1900	.	+	.	gene_id "G4";
+chr1	test	exon	1801	1900	.	+	.	gene_id "G4"; transcript_id "G4.1";
+chr2	test	gene	5001	5500	.	.	.	gene_id "G5";
+chr2	test	exon	5001	5500	.	.	.	gene_id "G5"; transcript_id "G5.1";

@@ -1,0 +1,2 @@
+cb,n_reads,mean_mapq,std_mapq,mean_base_qual,std_base_qual,mean_clip_frac,std_clip_frac,frac_clipped,frac_clip5,frac_clip3,frac_multimapper,mean_nm
+__no_barcode__,9,227.0,79.196,30.0,6.667,0.0222,0.0342,0.3333,0.1111,0.2222,0.1111,0.667

@@ -1,0 +1,4 @@
+cb,n_reads,mean_mapq,std_mapq,mean_base_qual,std_base_qual,mean_clip_frac,std_clip_frac,frac_clipped,frac_clip5,frac_clip3,frac_multimapper,mean_nm,contig
+AAAA-1,4,192.0,109.119,30.0,0.0,0.05,0.05,0.5,0.25,0.25,0.25,0.75,chr1
+AAAA-1,3,170.0,120.208,30.0,0.0,0.0,0.0,0.0,0.0,0.0,0.3333,1.0,chr2
+CCCC-1,2,255.0,0.0,35.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.5,chr1

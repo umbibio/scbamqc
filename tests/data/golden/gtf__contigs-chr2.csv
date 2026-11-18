@@ -1,0 +1,6 @@
+cb,n_reads,mean_mapq,std_mapq,mean_base_qual,std_base_qual,mean_clip_frac,std_clip_frac,frac_clipped,frac_clip5,frac_clip3,frac_multimapper,mean_nm
+antisense-4,1,255.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+exonic-10,1,255.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+exonic-3,1,255.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+exonic-9,1,255.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+intronic-2,1,255.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

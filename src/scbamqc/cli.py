@@ -5,7 +5,7 @@ from __future__ import annotations
 import multiprocessing as mp
 import sys
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import Annotated, Literal, NoReturn
 
 import cyclopts
 from rich.console import Console
@@ -28,7 +28,7 @@ _NM_TAGS = ("nM", "NM")
 _TAG_SAMPLE = 20_000
 
 
-def _fail(msg: str) -> None:
+def _fail(msg: str) -> NoReturn:
     err_console.print(f"[bold red]Error:[/bold red] {msg}")
     sys.exit(1)
 
@@ -150,11 +150,63 @@ def bam(
             help="Check the tags on the first reads. Warn if they are missing.",
         ),
     ] = True,
+    extra_metrics: Annotated[
+        bool,
+        cyclopts.Parameter(
+            name="--extra-metrics",
+            help="Add columns for read regions, UMIs, polyA and TSO artefacts, "
+            "unique MAPQ and mismatch counts. The default columns do not change.",
+            negative_bool="",
+        ),
+    ] = False,
+    gtf: Annotated[
+        Path | None,
+        cyclopts.Parameter(
+            name="--gtf",
+            help="GTF file for the read regions. Used only with --extra-metrics "
+            "and only when the BAM has no RE tag (Cell Ranger).",
+        ),
+    ] = None,
+    strand: Annotated[
+        Literal["forward", "reverse", "unstranded"],
+        cyclopts.Parameter(
+            name="--strand",
+            help="Library strand, for --gtf and the polyA/TSO scan. forward: "
+            "the read is on the transcript strand (10x 3' R2). reverse: the "
+            "opposite strand. unstranded: both strands (Smart-seq2).",
+        ),
+    ] = "forward",
+    umi_tag: Annotated[
+        str,
+        cyclopts.Parameter(
+            name="--umi-tag",
+            help="BAM tag with the UMI, for --extra-metrics. Cell Ranger and "
+            "STARsolo: UB.",
+        ),
+    ] = "UB",
+    mapq_unique: Annotated[
+        int,
+        cyclopts.Parameter(
+            name="--mapq-unique",
+            help="Minimum MAPQ of a unique read, for frac_mapq_unique. "
+            "STAR and Cell Ranger: 255.",
+        ),
+    ] = 255,
+    region_source: Annotated[
+        Literal["auto", "tags", "gtf"],
+        cyclopts.Parameter(
+            name="--region-source",
+            help="Source of the read regions, for --extra-metrics. auto: RE "
+            "tags if the BAM has them, else --gtf. tags: RE tags only. gtf: "
+            "--gtf, also if the BAM has RE tags.",
+        ),
+    ] = "auto",
 ):
     """Calculate alignment statistics for each cell barcode.
 
     Writes OUT_PREFIX_per_cell.csv.gz, and OUT_PREFIX_plots.png with --plots.
     Memory use depends on the number of barcodes, not on the number of reads.
+    With --extra-metrics, it also depends on the number of UMIs on one contig.
     """
     from ._report import print_summary
     from .bam import collect_metrics, to_dataframe
@@ -176,6 +228,23 @@ def bam(
         except ImportError:
             _fail("--plots needs matplotlib. Run: pip install scbamqc[plot]")
 
+    if gtf is not None and not gtf.exists():
+        _fail(f"File not found: {gtf}")
+    if extra_metrics and region_source == "gtf" and gtf is None:
+        _fail("--region-source gtf needs --gtf.")
+    if not extra_metrics and (
+        gtf is not None
+        or strand != "forward"
+        or umi_tag != "UB"
+        or mapq_unique != 255
+        or region_source != "auto"
+    ):
+        console.print(
+            "[yellow]Warning:[/yellow] --gtf, --strand, --umi-tag, "
+            "--mapq-unique and --region-source have no effect without "
+            "[bold]--extra-metrics[/bold]."
+        )
+
     if check_tags:
         _check_tags(bam, barcode_tag, nm_tag)
 
@@ -190,6 +259,12 @@ def bam(
             contig_prefixes=contig_prefix,
             show_progress=show_progress and console.is_terminal,
             console=console,
+            extra_metrics=extra_metrics,
+            gtf=gtf,
+            strand=strand,
+            umi_tag=umi_tag,
+            mapq_unique=mapq_unique,
+            region_source=region_source,
         )
     except ValueError as e:
         _fail(str(e))

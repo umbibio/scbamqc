@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- `scbamqc bam --extra-metrics`: adds columns for read regions, UMIs, polyA and TSO reads, unique MAPQ and mismatch counts. Without the option, the output does not change.
+- Read regions come from the Cell Ranger tags `RE`, `AN`, `GX` and `TX`. Without these tags, they come from the GTF file of `--gtf`.
+- Options for `--extra-metrics`: `--gtf`, `--strand` (`forward`, `reverse` or `unstranded`), `--umi-tag` and `--mapq-unique`.
+- `--region-source` option (`auto`, `tags` or `gtf`): selects the source of the read regions. Use `gtf` to compare the GTF regions with the Cell Ranger `RE` tags.
+- `n_umi_counted` column: the reads that Cell Ranger counts as UMIs (`xf` tag, bit 8).
+- `scbamqc.annot.load_gtf()`: reads the exons and genes of a GTF file. It does not need gene type attributes.
+- `collect_metrics()` options: `extra_metrics`, `gtf`, `strand`, `umi_tag`, `mapq_unique`, `region_source`.
+- `count_tags()` option `contigs`: sample only the reads of these contigs.
+
 ### Removed
 - Support for Python 3.11. scbamqc needs Python 3.12 or later.
 
